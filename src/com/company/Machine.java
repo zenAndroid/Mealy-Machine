@@ -174,9 +174,9 @@ public class Machine {
      * Here goes, the starting point of the execution of the Mealy Machine. <br />
      * It is passed an <code>ArrayList</code> of <code>Character</code>s of inputs, so steps are rather straight-forward:
      * 1- Set the machine input sequence to this.
-     * 2- Set the machine's pendingInput flag to true, since this is the case (the input was just initialized after all)
+     * 2- Set the machine's <code>pendingInput</code> flag to true, since this is the case (the input was just initialized after all)
      * 3- Notify the initial <code>State</code> so that it starts consuming the next input token.
-     * 4- Consumption of the inputSequence continues, until there ie none.
+     * 4- Consumption of the <code>inputSequence</code> continues, until there ie none.
      *     In other words, while input exists, consume it.
      * @param input The input fed to the machine.
      * @author zenAndroid
