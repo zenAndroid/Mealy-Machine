@@ -76,8 +76,8 @@ public class Machine {
     }
 
     /**
-     * Standard getter for the <code>State</code>s</code> of this machine.
-     * @return <code>State</code>s</code> of the machine.
+     * Standard getter for the <code>State</code>s of this machine.
+     * @return <code>State</code>s of the machine.
      */
     public ArrayList<State> getStates() {
         return states;
@@ -90,7 +90,13 @@ public class Machine {
      * @param states Array of <code>State</code>s
      */
     public void setStates(ArrayList<State> states) {
-        this.states = states;
+
+        for (State s : states) { // These state do not have a machine as an owner, so we set it for them.
+            s.setMach(this);
+            this.states.add(s);
+        }
+        // TODO: Test this functionality!
+        //  And I assume people that will come after me will (hopefully) make a proper testing suite.
     }
 
     /**
@@ -100,7 +106,7 @@ public class Machine {
      * @param states Array of <code>State</code>s
      */
     public void setStates(State... states) {
-        this.states = new ArrayList<>();
+        this.states = new ArrayList<>(); // Not sure this is even needed ...
 
         for (State s : states) {
             s.setMach(this);
@@ -166,7 +172,12 @@ public class Machine {
 
     /**
      * Here goes, the starting point of the execution of the Mealy Machine. <br />
-     *
+     * It is passed an ArrayList<Character> of inputs, so steps are rather straight-forward:
+     * 1- Set the machine input sequence to this.
+     * 2- Set the machine's pendingInput flag to true, since this is the case (the input was just initialized after all)
+     * 3- Notify the initial <code>State</code> so that it starts consuming the next input token.
+     * 4- Consumption of the inputSequence continues, until there ie none.
+     *     In other words, while input exists, consume it.
      * @param input The input fed to the machine.
      * @author zenAndroid
      */
@@ -181,19 +192,33 @@ public class Machine {
 
     /**
      * This method reads the next token and passes it down to its current state. <br />
-     * The method removes also returns the removed object, so it can be used for this purpose (I think ...)
+     * The method removes also returns the removed object, so it can be used for this purpose.
      * todo: What if there IS no input? deal with this case. EDIT: DONE (I think ...)
+     * @return Next input token.
      */
     public Character getNextInputToken() {
+        // Removes also returns the removed element, so we can use it to achieve two actions;
+        // (knowing about the next input token, and removing it as well)
         Character tok = getInputSequence().remove(0);
+
         if (getInputSequence().isEmpty()) {
-            setPendingInput(false);
+            setPendingInput(false); // Set to false given the fact the inputSequence is empty
         }
         return tok;
     }
 
     /**
      * Methods implementing the business logic that deals with incoming input.
+     * Depending on the program/application being developed, the machine's reaction to a transition can change.
+     * This method allows the description of such a reaction.
+     * For our test case right here, we only want to print it out.
+     * Example: Maybe on transition, our machine
+     * <ol>
+     *     <li>contacts an API and sends it a specific header request</li>
+     *     <li>appends an Object to a Collection</li>
+     *     <li>prints it out to a specific stream (file/StringBuilder/socket/etc.)</li>
+     *     <li>or some other operation ...</li>
+     * </ol>
      * @param sourceTransition The output of the machine, given its global state.
      */
     public void processOutput(Character sourceTransition) {
