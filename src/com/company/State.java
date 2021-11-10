@@ -9,12 +9,12 @@ import java.util.ArrayList;
  * A <code>State</code> has:
  * <ul>
  *     <li>A `name`.</li>
- *     <li>A `mach` variable that represents the machine tihs state belongs to.</li>
+ *     <li>A `mach` variable that represents the machine this state belongs to.</li>
  *     <li>A set of transitions: represents the transitions that flow-out of this <code>State</code></li>
  * </ul>
  *
  * This class also has a static member variable, `id`, which assigns each new <code>State</code> a new, unique ID.
- * These IDs are not used currently but they might replace the naming scheme for this model, or they may simply be a last naming resort.
+ * These IDs are not used currently, but they might replace the naming scheme for this model, or they may simply be a last naming resort.
  */
 public class State {
     static int id = 0;
@@ -22,6 +22,10 @@ public class State {
     String name;
     ArrayList<Transition> stateTransitions;
 
+    /**
+     * Standard constructor, needs a name.
+     * @param name Name used for the <code>State</code>
+     */
     public State(String name) {
         this.name = name;
         id = id++;
@@ -43,7 +47,15 @@ public class State {
         return stateTransitions;
     }
 
+    /**
+     * Custom setter function that uses the var-arg syntax to allow easier transition creation/addition to the <code>State</code>.
+     * <br />
+     *
+     * Might remove the @NotNull annotation since it adds an unnecessary dependency though.
+     * @param argTransitions The transitions intended for addition into the <code>State</code>.
+     */
     public void setStateTransitions(Transition @NotNull ... argTransitions) {
+        // Todo: figure out if this is even necessary.
         stateTransitions = new ArrayList<Transition>();
 
         for (Transition tr : argTransitions) {
@@ -66,13 +78,19 @@ public class State {
     /**
      * Method that triggers the state's consumption of the next input token.
      * todo: make sure that this respects representation independence. (stateTransitions or by getter?)
+     *  Will turn it into a getter function given that it will/should make it easier to change the implementation,
+     *  although i am not too convinced by this argument, since it is very unlikely that stateTransitions are ever changed,
+     *  .... yeah actually i don't think i'll change this.
      */
     public void consumeInputToken() {
         Character currTrigger = mach.getNextInputToken();
 
-        for (Transition tr : stateTransitions) {
+        for (Transition tr : stateTransitions) { // For every transition,
+            // We check that the transition is a) valid and b) compatible with this trigger.
             if (tr.isValid() && tr.isTriggeredBy(currTrigger)) {
+                // If so, then we a) emit the output marked by this transition;
                 emitOutput(tr.getTransitionOutput());
+                // b) change the machine's current state to the transition's destination State.
                 changeMachineState(tr.getDestinationState());
             }
         }
