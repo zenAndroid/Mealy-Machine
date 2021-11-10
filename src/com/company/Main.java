@@ -62,5 +62,15 @@ public class Main {
 
         System.out.println("Actually works, i cant believe it");
 
+        /**
+         * Prints:
+         * 0
+         * 0
+         * 0
+         * 1
+         * 0
+         * Actually works, i cant believe it
+         */
+
     }
 }
