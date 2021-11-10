@@ -108,6 +108,10 @@ public class State {
         // Will change this though.
     }
 
+    /**
+     * Method that allows a <code>State</code> to communicate a <code>Transition</code>'s output to its <code>Machine</code>.
+     * @param transitionOutput The output.
+     */
     private void emitOutput(Character transitionOutput) {
         mach.processOutput(transitionOutput);
     }
