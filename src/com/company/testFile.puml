@@ -1,0 +1,50 @@
+@startuml
+
+title Classes - Mealy machine representation
+
+
+class Machine {
+  -states: ArrayList<State>
+  -initialState: State
+  -currentState: State
+  -inputSequence: ArrayList<Character>
+  -inputAlphabet: Set<Character>
+  -outputAlphabet: Set<Character>
+  +Machine(states, initialState, inputSequence, inputAlphabet, outputAlphabet): void
+  +Machine(states, initialState, inputAlphabet, outputAlphabet): void
+  +Machine(): void
+  +setStates(State... states): void
+  +isPending(): boolean
+  +consume(): void
+  +getNextInputToken(): Character
+  +processOutput(): void
+  +StdGettersSetters():
+}
+
+class Transition {
+    -transitionTrigger;
+    -transitionOutput;
+    -destinationState;
+    -isEnabled;
+    +Transition(Character trigger, Character output)
+    +commonInit()
+    +StdGettersSetters()
+    +isTriggeredBy()
+    +isValid()
+}
+
+class State{
+    {static}id: int
+    -transitions
+    -mach
+    -name
+    +State()
+    +StdGettersSetters()
+    -changeMachineState()
+    -emitOutput()
+    +setStateTransitions(Transition... transitions)
+}
+
+State <|-down- Transition  : Composition
+Machine "1" *-right- "many" State: Composition
+@enduml
