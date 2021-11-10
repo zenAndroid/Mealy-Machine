@@ -96,8 +96,16 @@ public class State {
         }
     }
 
+    /**
+     * Method used to change machine's current state.
+     * @param destinationState State to change to.
+     * Todo: Stop accessing mach's field directly, bad coding.
+     */
     private void changeMachineState(State destinationState) {
-        mach.currentState = destinationState;
+        mach.currentState = destinationState; // I was actually surprised this works at first since
+        // we are accessing a class's field directly and the default initializer isn't public
+        // It turns out the default initializer is package-private, meaning classes defined in the same package can access the fields.
+        // Will change this though.
     }
 
     private void emitOutput(Character transitionOutput) {
