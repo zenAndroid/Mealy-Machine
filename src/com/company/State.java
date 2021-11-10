@@ -4,6 +4,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+/**
+ * Representing a state in the context of a Mealy Machine.
+ * A <code>State</code> has:
+ * <ul>
+ *     <li>A `name`.</li>
+ *     <li>A `mach` variable that represents the machine tihs state belongs to.</li>
+ *     <li>A set of transitions: represents the transitions that flow-out of this <code>State</code></li>
+ * </ul>
+ *
+ * This class also has a static member variable, `id`, which assigns each new <code>State</code> a new, unique ID.
+ * These IDs are not used currently but they might replace the naming scheme for this model, or they may simply be a last naming resort.
+ */
 public class State {
     static int id = 0;
     Machine mach;
