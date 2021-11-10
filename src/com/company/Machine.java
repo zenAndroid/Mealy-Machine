@@ -172,7 +172,7 @@ public class Machine {
 
     /**
      * Here goes, the starting point of the execution of the Mealy Machine. <br />
-     * It is passed an ArrayList<Character> of inputs, so steps are rather straight-forward:
+     * It is passed an <code>ArrayList</code> of <code>Character</code>s of inputs, so steps are rather straight-forward:
      * 1- Set the machine input sequence to this.
      * 2- Set the machine's pendingInput flag to true, since this is the case (the input was just initialized after all)
      * 3- Notify the initial <code>State</code> so that it starts consuming the next input token.
