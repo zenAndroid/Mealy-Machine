@@ -15,6 +15,8 @@ import java.util.ArrayList;
  *
  * This class also has a static member variable, `id`, which assigns each new <code>State</code> a new, unique ID.
  * These IDs are not used currently, but they might replace the naming scheme for this model, or they may simply be a last naming resort.
+ *
+ * @author zenAndroid
  */
 public class State {
     static int id = 0;

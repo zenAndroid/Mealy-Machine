@@ -1,5 +1,20 @@
 package com.company;
 
+/**
+ * Represents a transition between two states.
+ * This differs significantly from the mathematical model, which can ba said of the entire model to be honest.
+ * But the way it differs is that the mathematical model assumes that a singular transition holds both the source <code>State</code>
+ * and the destination <code>State</code>, whereas in this model the transition BELONGS to a <i>specific</i> <code>State</code>.
+ *
+ * Other than that, each <code>Transition</code> has:
+ * <ul>
+ *     <li>A transitionTrigger: The input that launches/triggers this transition.</li>
+ *     <li>A transitionOutput: The output that results for this transition being taken.</li>
+ *     <li>A transitionValid: The boolean flag that determines if this transition is valid and applicable.</li>
+ *     <li>A destinationState: The <code>State</code> taken after this transition takes place.</li>
+ * </ul>
+ * @author zenAndroid
+ */
 public class Transition {
     Character transitionTrigger;
     Character transitionOutput;
