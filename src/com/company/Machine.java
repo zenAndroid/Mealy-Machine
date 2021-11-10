@@ -1,7 +1,6 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,7 +12,7 @@ import java.util.Set;
  *     <li>An initial <code>State</code></li>
  *     <li>A current <code>State</code></li>
  *     <li>An <code>inputSequence</code>, representing the input sequence fed to the machine.</li>
- *     <li>Two non-modifiable sets:
+ *     <li>Two non-modifiable sets: (whether these will remain in the implementation as is, remains to be seen)
  *          <ul> <li><code>inputAlphabet</code>, A set of Character representing the input alphabet</li>
  *               <li><code>inputAlphabet</code>, A set of Character representing the output alphabet</li>
  *          </ul>
@@ -66,7 +65,7 @@ public class Machine {
         this.currentState = initialState;
         this.inputAlphabet = inputAlphabet;
         this.outputAlphabet = outputAlphabet;
-        this.pendingInput = false;
+        this.pendingInput = false; /* Set to false because no inputSequence was passed in, so there is no input */
     }
 
     /**
@@ -76,7 +75,10 @@ public class Machine {
         this.pendingInput = false;
     }
 
-
+    /**
+     * Standard getter for the <code>State</code>s</code> of this machine.
+     * @return <code>State</code>s</code> of the machine.
+     */
     public ArrayList<State> getStates() {
         return states;
     }

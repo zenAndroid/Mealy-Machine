@@ -12,6 +12,8 @@ public class Main {
     public static void main(String[] args) {
         // write your code here
 
+        // Hardcoded machine (they are only for TEMPORARY testing purposes, i swear ...)
+
         // Creating the states;
 
         Machine M = new Machine();
