@@ -21,6 +21,11 @@ public class Transition {
     Boolean transitionValid;
     State destinationState;
 
+    /**
+     * <code>Transition</code> constructor, takes the trigger and the output resulting from this transition.
+     * @param transitionTrigger Input token that triggers the transition.
+     * @param transitionOutput Output emitted when this transition takes place.
+     */
     public Transition(Character transitionTrigger, Character transitionOutput) {
         commonInit();
         this.transitionTrigger = transitionTrigger;
@@ -28,6 +33,12 @@ public class Transition {
         destinationState = null;
     }
 
+    /**
+     * <code>Transition</code> constructor, take the trigger, the output, and the destination <code>State</code>
+     * @param transitionTrigger Input token that triggers the transition.
+     * @param transitionOutput Output emitted when this transition takes place.
+     * @param destinationState The reluting <code>State</code> after this <code>Transition</code>.
+     */
     public Transition(Character transitionTrigger, Character transitionOutput, State destinationState) {
         commonInit();
         this.transitionTrigger = transitionTrigger;
@@ -35,6 +46,9 @@ public class Transition {
         this.destinationState = destinationState;
     }
 
+    /**
+     * Method for holding the common operations that occur when creating a <code>Transition</code>
+     */
     public void commonInit() {
 
         /* All transitions start out valid */
@@ -73,10 +87,19 @@ public class Transition {
         this.destinationState = destinationState;
     }
 
+    /**
+     * Essentialy a getter for <code>transitionValid</code>.
+     * @return <code>transitionValid</code>
+     */
     public Boolean isValid() {
         return transitionValid;
     }
 
+    /**
+     * Method for testing whether the passed argument is equal to this <code>Transition</code>'s trigger.
+     * @param trigger
+     * @return If the character (in this case) is the same as this <code>Transition</code>'s trigger.
+     */
     public Boolean isTriggeredBy(Character trigger) {
         return getTransitionTrigger().equals(trigger);
     }

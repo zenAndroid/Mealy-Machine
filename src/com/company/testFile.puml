@@ -25,6 +25,7 @@ class Transition {
     -transitionTrigger;
     -transitionOutput;
     -destinationState;
+    -sourceState;
     -isEnabled;
     +Transition(Character trigger, Character output)
     +commonInit()
