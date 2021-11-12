@@ -19,6 +19,7 @@ public class Transition {
     Character transitionTrigger;
     Character transitionOutput;
     Boolean transitionValid;
+    State sourceState;
     State destinationState;
 
     /**
@@ -47,12 +48,26 @@ public class Transition {
     }
 
     /**
+     * <code>Transition</code> constructor that accepts also the <code>sourceState</code> to hold a reference to the source state;
+     * @param transitionTrigger Input token that triggers the transition.
+     * @param transitionOutput Output emitted when this transition takes place.
+     * @param sourceState The <code>State</code> that 'emits' this <code>Transition</code>.
+     * @param destinationState The resulting <code>State</code> after this <code>Transition</code>.
+     */
+    public Transition(Character transitionTrigger, Character transitionOutput, State sourceState, State destinationState) {
+        this.transitionTrigger = transitionTrigger;
+        this.transitionOutput = transitionOutput;
+        this.sourceState = sourceState;
+        this.destinationState = destinationState;
+    }
+
+    /**
      * Method for holding the common operations that occur when creating a <code>Transition</code>
      */
     public void commonInit() {
 
         /* All transitions start out valid */
-        transitionValid = Boolean.valueOf(true);
+        transitionValid = true; // Autoboxing is automatic.
     }
 
     public Character getTransitionTrigger() {
@@ -87,6 +102,14 @@ public class Transition {
         this.destinationState = destinationState;
     }
 
+    public State getSourceState() {
+        return sourceState;
+    }
+
+    public void setSourceState(State sourceState) {
+        this.sourceState = sourceState;
+    }
+
     /**
      * Essentialy a getter for <code>transitionValid</code>.
      * @return <code>transitionValid</code>
@@ -97,7 +120,7 @@ public class Transition {
 
     /**
      * Method for testing whether the passed argument is equal to this <code>Transition</code>'s trigger.
-     * @param trigger
+     * @param trigger Input token being tested for (value) equality.
      * @return If the character (in this case) is the same as this <code>Transition</code>'s trigger.
      */
     public Boolean isTriggeredBy(Character trigger) {
