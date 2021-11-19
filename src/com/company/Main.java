@@ -100,14 +100,16 @@ public class Main {
         // 7- Set the machine states
         MM.setStates(q1,q2,q3,q4);
         // 8- Set the input sequence. and consume
-        MM.consume(new ArrayList<Character>(List.of('a','b','b','a','b','b','b','a')));
+        MM.consume(new ArrayList<>(List.of('a','b','b','a','b','b','b','a')));
 
         // This should give
         // 0 0 0 1 1 1 1 1
 
         System.out.println("Actually works, i cant believe it");
 
-        /**
+        System.out.println(MM.toDot());
+
+        /*
          * Prints:
          * 0
          * 0

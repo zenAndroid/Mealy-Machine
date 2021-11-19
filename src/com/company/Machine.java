@@ -19,6 +19,7 @@ import java.util.Set;
  *     </li>
  *     <li><code>pendingInput</code>, a boolean flag representing whether there is still input.</li>
  * </ul>
+ *
  * @author zenAndroid
  */
 public class Machine {
@@ -34,10 +35,11 @@ public class Machine {
      * Constructor for an object of the <code>Machine</code> class.
      * <br />
      * Note that this constructor sets the <code>pendingInput</code> flag to true, since the input sequence is passed in as an argument to this constructor.
-     * @param states The states.
-     * @param initialState The initial state of this machine.
-     * @param inputSequence The current sequence of inputs.
-     * @param inputAlphabet The input alphabet.
+     *
+     * @param states         The states.
+     * @param initialState   The initial state of this machine.
+     * @param inputSequence  The current sequence of inputs.
+     * @param inputAlphabet  The input alphabet.
      * @param outputAlphabet The output alphabet.
      */
     public Machine(ArrayList<State> states, State initialState, ArrayList<Character> inputSequence, Set<Character> inputAlphabet, Set<Character> outputAlphabet) {
@@ -52,11 +54,12 @@ public class Machine {
 
     /**
      * Constructor for an object of the <code>Machine</code> class, when the input sequence isn't known at creation-time.
-     *
+     * <p>
      * Note that this constructor sets the <code>pendingInput</code> flag to <code>false</code>.
-     * @param states The states.
-     * @param initialState The initial state of this machine.
-     * @param inputAlphabet The input alphabet.
+     *
+     * @param states         The states.
+     * @param initialState   The initial state of this machine.
+     * @param inputAlphabet  The input alphabet.
      * @param outputAlphabet The output alphabet.
      */
     public Machine(ArrayList<State> states, State initialState, Set<Character> inputAlphabet, Set<Character> outputAlphabet) {
@@ -77,6 +80,7 @@ public class Machine {
 
     /**
      * Standard getter for the <code>State</code>s of this machine.
+     *
      * @return <code>State</code>s of the machine.
      */
     public ArrayList<State> getStates() {
@@ -87,10 +91,11 @@ public class Machine {
      * Standard setter for the Array of <code>State</code>s.
      * <br />
      * This setter then gives all the passed states the calling instantiated <code>Machine</code> as the 'owner' machine.
+     *
      * @param states Array of <code>State</code>s
      */
     public void setStates(ArrayList<State> states) {
-
+        this.states = new ArrayList<>();
         for (State s : states) { // These state do not have a machine as an owner, so we set it for them.
             s.setMach(this);
             this.states.add(s);
@@ -103,10 +108,11 @@ public class Machine {
      * Setter for the states that utilizes the var-arg capabilities to allow for ease of construction of <code>State</code>s.
      * <br />
      * This setter then gives all the passed states the calling instantiated <code>Machine</code> as the 'owner' machine.
+     *
      * @param states Array of <code>State</code>s
      */
     public void setStates(State... states) {
-        this.states = new ArrayList<>(); // Not sure this is even needed ...
+        this.states = new ArrayList<>(); // Not sure this is even needed ... EDIT: It's crucial, let it be
 
         for (State s : states) {
             s.setMach(this);
@@ -164,6 +170,7 @@ public class Machine {
 
     /**
      * Returns whether there is still input to be processed by the machine.
+     *
      * @return the boolean value that represents the availability of input.
      */
     public boolean isPending() {
@@ -177,7 +184,8 @@ public class Machine {
      * 2- Set the machine's <code>pendingInput</code> flag to true, since this is the case (the input was just initialized after all)
      * 3- Notify the initial <code>State</code> so that it starts consuming the next input token.
      * 4- Consumption of the <code>inputSequence</code> continues, until there ie none.
-     *     In other words, while input exists, consume it.
+     * In other words, while input exists, consume it.
+     *
      * @param input The input fed to the machine.
      * @author zenAndroid
      */
@@ -194,6 +202,7 @@ public class Machine {
      * This method reads the next token and passes it down to its current state. <br />
      * The method removes also returns the removed object, so it can be used for this purpose.
      * todo: What if there IS no input? deal with this case. EDIT: DONE (I think ...)
+     *
      * @return Next input token.
      */
     public Character getNextInputToken() {
@@ -219,9 +228,31 @@ public class Machine {
      *     <li>prints it out to a specific stream (file/StringBuilder/socket/etc.)</li>
      *     <li>or some other operation ...</li>
      * </ol>
+     *
      * @param sourceTransition The output of the machine, given its global state.
      */
     public void processOutput(Character sourceTransition) {
         System.out.println(sourceTransition);
+    }
+
+    /**
+     * @return A <a href="http://www.research.att.com/sw/tools/graphviz/" target="_top">Graphviz Dot</a>
+     * representation of this automaton.
+     */
+    public String toDot() {
+        StringBuilder b = new StringBuilder("digraph Automaton {\n");
+        b.append("    node [shape=circle];\n");
+        b.append("    node [shape=point] INIT;\n");
+        b.append("    rankdir = LR;\n");
+        b.append("    INIT -> " + getInitialState().getName() + ";\n");
+        ArrayList<State> machineStates = getStates();
+        for (State s : machineStates){
+            var stateTranses = s.getStateTransitions();
+            for (Transition t : stateTranses) {
+                b.append("    " + s.getName() + " -> " + t.getDestinationState().getName() + " ");
+                b.append("[label=\"" + t.getTransitionTrigger() + "/" + t.getTransitionOutput() + "\"];\n");
+            }
+        }
+        return b.append("}\n").toString();
     }
 }
